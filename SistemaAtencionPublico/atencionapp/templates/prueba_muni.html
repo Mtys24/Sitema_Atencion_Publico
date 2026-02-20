@@ -1,0 +1,22 @@
+<div class="container" style="padding: 20px; font-family: sans-serif;">
+    <h1>SQL Server Docker</h1>
+
+
+    <hr>
+
+    <form method="POST" style="margin: 20px 0;">
+        {% csrf_token %}
+        <input type="text" name="rut" placeholder="RUT" required>
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <button type="submit" >FORZAR INSERCIÓN</button>
+    </form>
+
+    <h3>Registros en la BD:</h3>
+    <ul>
+        {% for c in contribuyentes %}
+            <li><strong>ID: {{ c.id }}</strong> - {{ c.rut }} - {{ c.nombre }}</li>
+        {% empty %}
+            <li>No hay registros adicionales.</li>
+        {% endfor %}
+    </ul>
+</div>

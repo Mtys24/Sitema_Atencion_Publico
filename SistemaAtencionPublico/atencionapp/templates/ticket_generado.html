@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ticket Generado - Santa Cruz</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --guinda: #7B1E33;
+            --dorado: #c5a059;
+            --papel: #fdfaf5;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .ticket-container {
+            background-color: var(--papel);
+            border: 2px solid var(--dorado);
+            border-radius: 15px;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            max-width: 450px;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .uvas-dec {
+            position: absolute;
+            width: 100px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        .uvas-top { top: -10px; right: -10px; transform: rotate(15deg); }
+        .uvas-bottom { bottom: -10px; left: -10px; transform: rotate(-165deg); }
+
+        .ticket-header {
+            border-bottom: 2px double var(--dorado);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+
+        .ticket-header h2 {
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            color: var(--guinda);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .numero-display {
+            font-family: 'Playfair Display', serif;
+            font-size: 100px;
+            color: var(--guinda);
+            line-height: 1;
+            margin: 20px 0;
+            text-shadow: 2px 2px 0px rgba(197, 160, 89, 0.2);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(197, 160, 89, 0.3);
+            padding-top: 15px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        #contador-box {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 30px;
+        }
+
+        .btn-return {
+            background-color: var(--guinda);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-return:hover {
+            background-color: #5c1626;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .corte {
+            border-top: 2px dashed #ccc;
+            margin: 40px 0;
+            position: relative;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="container text-center mt-5 mb-5">
+        
+        <div class="ticket-container">
+            <svg class="uvas-dec uvas-top" viewBox="0 0 100 100">
+                <path fill="currentColor" d="M50 20c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm-15 15c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm30 0c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zM50 50c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10z" style="color: var(--guinda);"/>
+            </svg>
+
+            <div class="ticket-header">
+                <h2>Municipalidad de Santa Cruz</h2>
+            </div>
+
+            <p class="text-muted mb-0 small">SU NÚMERO DE ATENCIÓN</p>
+            <h1 class="numero-display">{{ ticket.numero }}</h1>
+            
+            <h5 class="fw-bold mb-4" style="color: var(--dorado);">{{ ticket.tipo_atencion.nombre }}</h5>
+
+            <div class="info-row">
+                <div><strong>FECHA:</strong> {{ ticket.fecha_emision|date:"d/m/Y" }}</div>
+                <div><strong>HORA:</strong> {{ ticket.fecha_emision|date:"H:i" }}</div>
+            </div>
+
+            <svg class="uvas-dec uvas-bottom" viewBox="0 0 100 100">
+                <path fill="currentColor" d="M50 20c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm-15 15c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm30 0c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zM50 50c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10z" style="color: var(--guinda);"/>
+            </svg>
+        </div>
+
+        <div class="corte"></div>
+
+        <div id="contador-box">
+            Será llamado por pantalla según su número.</p>
+            <p>La pantalla se reiniciará en <span id="contador" class="fw-bold text-dark">25</span> segundos.</p>
+        </div>
+
+        <div class="mt-4">
+            <a href="{% url 'inicio' %}" class="btn-return">
+                LISTO, VOLVER AL INICIO
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        let segundos = 25;
+        const contador = document.getElementById("contador");
+
+        const intervalo = setInterval(function() {
+            segundos--;
+            contador.textContent = segundos;
+
+            if (segundos <= 0) {
+                clearInterval(intervalo);
+                window.location.href = "{% url 'inicio' %}";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Módulo de Atención - Municipalidad de Santa Cruz</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Tapestry&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      :root {
+        --bg-color: radial-gradient(circle, #ffffff 0%, #ebebeb 100%);
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --card-border: rgba(123, 30, 51, 0.1);
+        --h1-color: #7B1E33;
+        --footer-text: #555;
+        --btn-grad: linear-gradient(135deg, #8b223a 0%, #5c0f25 100%);
+        --btn-shadow: rgba(123, 30, 51, 0.3);
+        --img-filter: none;
+      }
+
+      [data-theme="dark"] {
+        --bg-color: radial-gradient(circle, #1a1a1a 0%, #050505 100%);
+        --card-bg: rgba(40, 40, 40, 0.9); 
+        --card-border: rgba(197, 160, 89, 0.3); 
+        --h1-color: #ff5e7e; 
+        --footer-text: #ccc;
+        --btn-grad: linear-gradient(135deg, #a32b45 0%, #7B1E33 100%);
+        --btn-shadow: rgba(255, 94, 126, 0.2);
+        --img-filter: brightness(0.9) contrast(1.1); 
+      }
+
+      body {
+        font-family: 'Montserrat', sans-serif;
+        min-height: 100vh;
+        background: var(--bg-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        transition: background 0.4s ease;
+      }
+
+      .main-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(15px);
+        padding: 50px 40px;
+        border-radius: 40px;
+        box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+        max-width: 600px;
+        width: 95%;
+        border: 2px solid var(--card-border);
+        transition: all 0.4s ease;
+      }
+
+      h1 {
+        color: var(--h1-color); 
+        font-weight: 800;
+        margin-bottom: 40px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        animation: fadeInDown 0.8s ease forwards;
+      }
+
+      .logo-muni, .escudo-footer {
+        filter: var(--img-filter);
+        transition: filter 0.4s ease;
+      }
+
+      .logo-muni {
+        width: 220px;
+        margin-bottom: 25px;
+        opacity: 0;
+        animation: zoomIn 0.6s ease forwards;
+      }
+
+      .tipo-btn {
+        font-family: "Tapestry", serif;
+        font-size: 28px;
+        color: #ffffff !important;
+        background: var(--btn-grad);
+        border: 2.5px solid #c5a059; 
+        border-radius: 60px;
+        padding: 18px 30px;
+        margin-bottom: 20px;
+        text-decoration: none;
+        display: block;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        text-shadow: 2px 3px 5px rgba(0, 0, 0, 0.7);
+        box-shadow: 0 10px 25px var(--btn-shadow);
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .tipo-btn:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 20px 35px var(--btn-shadow);
+        filter: brightness(1.2);
+        border-color: #f1d392;
+      }
+
+      .theme-switch {
+        position: fixed;
+        bottom: 30px; 
+        right: 30px;
+        background: #c5a059;
+        color: #7B1E33;
+        border: none;
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      .theme-switch:hover {
+        transform: scale(1.1);
+        background: #7B1E33;
+        color: #c5a059;
+      }
+
+      footer {
+        margin-top: 40px;
+        padding-top: 25px;
+        border-top: 1px solid rgba(128,128,128,0.2);
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards 1.2s;
+      }
+
+      .escudo-footer {
+        width: 70px;
+        margin-bottom: 15px;
+      }
+
+      .footer-text {
+        font-size: 14px;
+        color: var(--footer-text);
+        font-weight: 600;
+      }
+
+      @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+      @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+      .reveal { animation: fadeInUp 0.7s ease forwards; }
+    </style>
+  </head>
+
+  <body>
+
+    <button class="theme-switch" id="themeToggle">
+      <span id="themeIcon">🌙</span> <span id="themeText"></span>
+    </button>
+
+    <div class="main-card text-center">
+      <img src="https://munisantacruz.cl/wp-content/uploads/2025/05/Logos-Municipalidad-de-Santa-Cruz-scaled.png" 
+           alt="Logo Municipalidad Santa Cruz" class="logo-muni">
+
+      <h1>Módulo de Atención</h1>
+
+      <div class="tipos-container" id="btnContainer">
+        {% for tipo in tipos %}
+        <a href="{% url 'ingresar_rut' tipo.id %}" class="tipo-btn">{{ tipo.nombre }}</a>
+        {% endfor %}
+      </div>
+
+      <footer>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Escudo_de_Santa_Cruz%2C_Chile.svg/500px-Escudo_de_Santa_Cruz%2C_Chile.svg.png" 
+             alt="Escudo Santa Cruz" class="escudo-footer">
+        <div class="footer-text">
+          Ilustre Municipalidad de Santa Cruz <br>
+          <small>Innovación y tradición para nuestra gente.</small>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const botones = document.querySelectorAll('.tipo-btn');
+        botones.forEach((btn, index) => {
+          setTimeout(() => {
+            btn.classList.add('reveal');
+          }, index * 200);
+        });
+      });
+
+      const toggleBtn = document.getElementById('themeToggle');
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+      const body = document.body;
+
+      toggleBtn.addEventListener('click', () => {
+        if (body.getAttribute('data-theme') === 'dark') {
+          body.removeAttribute('data-theme');
+          themeIcon.innerText = "🌙";
+          themeText.innerText = "";
+        } else {
+          body.setAttribute('data-theme', 'dark');
+          themeIcon.innerText = "☀️";
+          themeText.innerText = "";
+        }
+      });
+    </script>
+  </body>
+</html>

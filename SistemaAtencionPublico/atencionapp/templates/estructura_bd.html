@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Estructura de la BD</title>
+    <style>
+        table { border-collapse: collapse; width: 80%; margin: 20px auto; font-family: sans-serif; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .back-link { display: block; text-align: center; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align: center;">Diseño de Tablas en Docker (MuniDB)</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Tabla</th>
+                <th>Columna</th>
+                <th>Tipo de Dato</th>
+                <th>Largo Máx.</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for col in columnas %}
+            <tr>
+                <td><strong>{{ col.TABLE_NAME }}</strong></td>
+                <td>{{ col.COLUMN_NAME }}</td>
+                <td>{{ col.DATA_TYPE }}</td>
+                <td>{{ col.CHARACTER_MAXIMUM_LENGTH|default:"-" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="/test-muni/" class="back-link">Volver al Formulario</a>
+
+</body>
+</html>
